@@ -46,15 +46,15 @@ public:
     void flip() { isFaceUp = !isFaceUp; }
     bool isFaceUpCard() const { return isFaceUp; }
 
-    friend std::ostream& operator<<(std::ostream& os, const Card& card) {
-        const std::string RANKS[] = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
-        const std::string SUITS[] = { "\u2665", "\u2666", "\u2663", "\u2660" };
+    friend std::wostream& operator<<(std::wostream& os, const Card& card) {
+        const std::wstring RANKS[] = { L"A", L"2", L"3", L"4", L"5", L"6", L"7", L"8", L"9", L"10", L"J", L"Q", L"K" };
+        const std::wstring SUITS[] = { L"\u2665", L"\u2666", L"\u2663", L"\u2660" };
 
         if (card.isFaceUp) {
             os << RANKS[card.rank - 1] << SUITS[card.suit];
         }
         else {
-            os << "XX";
+            os << L"XX";
         }
         return os;
     }
@@ -109,11 +109,11 @@ public:
         return cards;
     }
 
-    friend std::ostream& operator<<(std::ostream& os, const Hand& hand) {
+    friend std::wostream& operator<<(std::wostream& os, const Hand& hand) {
         for (const Card& card : hand.cards) {
-            os << card << " ";
+            os << card << L" ";
         }
-        os << "[" << hand.getTotal() << "]";
+        os << L"[" << hand.getTotal() << L"]";
         return os;
     }
 
@@ -286,16 +286,16 @@ private:
     }
 
     void displayHands(bool showDealerHand = true) const {
-        std::cout << dealer.getName() << ": ";
+        std::wcout << std::wstring(dealer.getName().begin(), dealer.getName().end()) << L": ";
         if (showDealerHand) {
-            std::cout << dealer.getHand() << std::endl;
+            std::wcout << dealer.getHand() << std::endl;
         }
         else {
             // Показуємо лише другу карту дилера як XX
-            std::cout << "XX " << dealer.getHand().getCards()[1] << " [??]\n";
+            std::wcout << L"XX " << dealer.getHand().getCards()[1] << L" [??]\n";
         }
 
-        std::cout << player.getName() << ": " << player.getHand() << "\n\n";
+        std::wcout << std::wstring(player.getName().begin(), player.getName().end()) << L": " << player.getHand() << L"\n\n";
     }
 
     void checkBlackjacks() {
